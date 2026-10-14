@@ -1,0 +1,130 @@
+\documentclass[tikz,border=20pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, shadows, backgrounds, calc}
+
+% --- Définition des Couleurs ---
+\definecolor{SoftRed}{RGB}{255, 204, 204}
+\definecolor{SoftBlue}{RGB}{220, 230, 255}
+\definecolor{SoftGreen}{RGB}{204, 255, 204}
+\definecolor{SoftGray}{RGB}{245, 245, 245}
+\definecolor{BorderGray}{RGB}{100, 100, 100}
+
+% --- Configuration des styles ---
+\tikzset{
+    base/.style = {
+        draw=BorderGray, 
+        thick, 
+        align=center, 
+        drop shadow={opacity=0.2, shadow xshift=1mm, shadow yshift=-1mm},
+        minimum height=1cm
+    },
+    startstop/.style = {base, rounded corners, fill=SoftRed, minimum width=3cm},
+    process/.style = {base, rectangle, fill=SoftBlue, minimum width=3.5cm},
+    decision/.style = {base, diamond, aspect=2, fill=SoftGreen, inner sep=0pt, minimum width=3cm},
+    container/.style = {
+        draw=black!40, 
+        dashed, 
+        fill=SoftGray!40, 
+        rounded corners, 
+        inner sep=0.5cm
+    },
+    >=Latex, 
+    font=\sffamily\small,
+    every path/.style={thick}
+}
+
+\begin{document}
+
+\begin{tikzpicture}[node distance=1.5cm and 2cm]
+
+% ==========================================
+% COLONNE CENTRALE (Démarrage)
+% ==========================================
+\node (start) [startstop] {Début programme};
+\node (init) [process, below=1cm of start] {Initialisation des capteurs,\\moteurs et écran LCD};
+\node (fork) [process, below=1cm of init] {\textbf{Création thread couleur}\\ \texttt{pthread\_create}};
+
+% ==========================================
+% COLONNE DE DROITE (Thread couleur)
+% ==========================================
+\node (ct_start) [process, right=3cm of fork, yshift=-1cm] {Début boucle couleur};
+\node (ct_read) [process, below=0.8cm of ct_start] {Lecture TCS34725};
+\node (ct_check) [decision, below=0.8cm of ct_read] {Changement ?};
+\node (ct_action) [process, right=1.5cm of ct_check] {Affichage LCD + buzzer};
+\node (ct_sleep) [process, below=1cm of ct_check] {Pause (usleep)};
+
+% ==========================================
+% COLONNE DE GAUCHE (Thread principal)
+% ==========================================
+\node (main_loop) [decision, below=1.5cm of fork] {Reste des\\commandes ?};
+
+\node (read_cmd) [process, below=1cm of main_loop] {Lecture commande\\suivante};
+\node (type_cmd) [decision, below=1cm of read_cmd] {Type ?};
+
+% Actions
+\node (cmd_av) [process, left=0.5cm of type_cmd, yshift=-2.5cm] {\textbf{Avancer}\\ Suivi PID jusqu'à intersection};
+\node (cmd_turn) [process, right=0.5cm of type_cmd, yshift=-2.5cm] {\textbf{Tourner}\\ Rotation aveugle\\+ récupération ligne};
+
+% Branche Fin
+\node (final_phase) [process, left=2.5cm of main_loop] {Mode « vers l'arrivée »};
+\node (final_check) [decision, below=1cm of final_phase] {Zone rouge ?};
+\node (final_move) [process, below=1cm of final_check] {Suivi de ligne simple};
+
+% ==========================================
+% FIN
+% ==========================================
+\node (stop) [process, below=10cm of fork] {\textbf{Arrêt total}\\ Arrêt moteurs et thread};
+\node (end) [startstop, below=1cm of stop] {Fin programme};
+
+% ==========================================
+% LIENS
+% ==========================================
+% Démarrage
+\draw [->] (start) -- (init);
+\draw [->] (init) -- (fork);
+\draw [->] (fork) -- (main_loop);
+
+% Thread couleur
+\draw [->, dashed] (fork.east) -| node[pos=0.2, above, font=\scriptsize\bfseries] {Création d'un thread} (ct_start.north);
+\draw [->] (ct_start) -- (ct_read);
+\draw [->] (ct_read) -- (ct_check);
+\draw [->] (ct_check) -- node[above] {Oui} (ct_action);
+\draw [->] (ct_check) -- node[right] {Non} (ct_sleep);
+\draw [->] (ct_action) |- (ct_sleep);
+\draw [->] (ct_sleep.west) -- ++(-0.5,0) |- (ct_read.west);
+
+% Thread principal
+\draw [->] (main_loop) -- node[right] {Oui} (read_cmd);
+\draw [->] (read_cmd) -- (type_cmd);
+
+% Décision Type
+\draw [->] (type_cmd) -| node[above, pos=0.2] {AV} (cmd_av);
+\draw [->] (type_cmd) -| node[above, pos=0.2] {TG / TD} (cmd_turn);
+
+% Retours
+\draw [->] (cmd_av.south) -- ++(0,-0.3) -| ([xshift=-0.5cm]main_loop.west) -- (main_loop.west);
+\draw [->] (cmd_turn.south) -- ++(0,-0.3) -| ([xshift=0.5cm]read_cmd.east) -- (read_cmd.east);
+
+% Branche Fin
+\draw [->] (main_loop.west) -- node[above] {Non} (final_phase);
+\draw [->] (final_phase) -- (final_check);
+\draw [->] (final_check) -- node[right] {Non} (final_move);
+\draw [->] (final_move.west) -- ++(-0.3,0) |- (final_check.west);
+\draw [->] (final_check.east) -| node[above, pos=0.1] {Oui} ([xshift=-2cm]stop.north west) -- (stop.north west);
+
+% Fin
+\draw [->] (stop) -- (end);
+
+% ==========================================
+% ARRIÈRE-PLANS
+% ==========================================
+\begin{pgfonlayer}{background}
+    \node [container, fit=(ct_start) (ct_read) (ct_action) (ct_sleep), label={[blue!50!black, font=\bfseries]above:Thread secondaire (couleur)}] {};
+    \node [container, fit=(main_loop) (read_cmd) (cmd_av) (cmd_turn) (final_phase) (final_move), label={[blue!50!black, font=\bfseries]above left:Thread principal (navigation)}] {};
+\end{pgfonlayer}
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,101 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{boldline,multirow,tabularx,colortbl,diagbox,makecell,fancybox}
+\usepackage{amsfonts,amssymb,amsmath,mathrsfs,array,stmaryrd}
+\usepackage{pgf,tikz,xcolor}
+\usetikzlibrary{calc,positioning,shapes.geometric,shapes.symbols,shapes.misc, fit, shapes, arrows, arrows.meta,fadings,through}
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{subfigure}
+\usepackage{wrapfig}
+\usepackage{biblatex}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{algorithme}
+\usepackage{csquotes}
+\usepackage[inkscapelatex=false]{svg}
+\usepackage{pdflscape}
+\usepackage{pdfpages}
+\usepackage[
+    left = \flqq{},% 
+    right = \frqq{},% 
+    leftsub = \flq{},% 
+    rightsub = \frq{} %
+]{dirtytalk}
+
+\geometry{margin=2.5cm}
+
+\begin{document}
+
+\pagenumbering{gobble}
+\thispagestyle{empty}
+\noindent\begin{tikzpicture}[remember picture, overlay, shift={(current page.south west)}]
+    \node[anchor=north west] at (2,27.7) {\includegraphics[height=1.225cm, keepaspectratio]{INSALogo.pdf}};
+    \node[anchor=north west] at (2,26.25) {Département ITI};
+    \node[above = 90pt of current page.center] (ptitle) {\parbox{\textwidth}{\centering\LARGE{\textbf{Rapport de projet}\\
+    \text{Smart Robot}
+    }}};
+    \node[above = 12.5pt of ptitle.north] {\rule{4cm}{0.25mm}};
+    \node[below = 12.5pt of ptitle.south] {\rule{4cm}{0.25mm}};
+    
+    \node[above = 230pt of current page.center] (rapport) {\Large{\textsc{Projet intégratif : Smart Robot}}};
+    \node[below = 65pt of current page.center] (pstudents) {\centering\begin{tabular}{ll}
+        Célia & ANTUNES \\
+        Edouard & DOUBET \\
+        Adam & EL MARZOUKI \\
+        Bréhan & ERAUD-ROBERT \\
+        Hadi & ASSI \\
+        Romain & LEPREVOST \\
+    \end{tabular}};
+    \node[above = 5pt of pstudents] (pstudentstitle) {\textbf{Étudiants}};
+    
+    \node[below = 150pt of pstudents] (pdate) {\today};
+\end{tikzpicture}
+
+\newpage
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+% -------------------------------
+% INTRODUCTION
+% -------------------------------
+\include{parties/introduction}
+
+% -------------------------------
+% CHAPITRE 1 — Présentation du sujet
+% -------------------------------
+\include{parties/presentation_sujet}
+
+% -------------------------------
+% CHAPITRE 2 — Partie électronique
+% -------------------------------
+\include{parties/partie_electronique}
+
+% -------------------------------
+% CHAPITRE 3 — Partie informatique
+% -------------------------------
+\include{parties/partie_informatique}
+
+% -------------------------------
+% CHAPITRE 4 — Démonstration
+% -------------------------------
+\include{parties/demonstration}
+
+% -------------------------------
+% CHAPITRE 5 — Réalisation et gestion de projet
+% -------------------------------
+\include{parties/realisation_projet}
+
+% -------------------------------
+% CONCLUSION
+% -------------------------------
+\include{parties/conclusion}
+
+\end{document}

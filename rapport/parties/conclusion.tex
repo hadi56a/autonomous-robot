@@ -1,0 +1,73 @@
+\chapter*{Conclusion}
+\addcontentsline{toc}{chapter}{Conclusion}
+
+Ce projet intégratif nous a permis de mettre en \oe uvre de manière concrète les compétences acquises en électronique pour les systèmes embarqués et en algorithmique avancée et programmation C. L'objectif était ambitieux : concevoir un système autonome capable d'analyser une ville virtuelle, de calculer le chemin optimal et de s'y déplacer physiquement avec précision.
+
+Sur le plan technique, nous avons réussi à concevoir une architecture matérielle fonctionnelle, validée par un bilan de puissance cohérent assurant près de 5 heures d'autonomie théorique. La séparation des circuits de puissance et de logique a garanti la stabilité du Raspberry Pi. 
+
+Côté logiciel, l'implémentation du cycle en V nous a permis de structurer notre code efficacement. Une attention particulière a été portée à l'optimisation des tâches : l'utilisation du multithreading pour la gestion des périphériques (buzzer, écran LCD et capteur RGB) a permis de fluidifier la boucle de navigation principale, tandis que l'algorithme de recherche en largeur (BFS) s'est révélé extrêmement performant, calculant le trajet optimal en seulement 60 millisecondes.
+
+La démonstration finale a mis en lumière à la fois la fiabilité de notre logique et les défis du monde physique. Bien que le robot ait parfaitement négocié les 15 premières cases, il a rencontré une difficulté technique liée à la détection des lignes sous les pastilles de couleur. Cet incident montre les limites du code face aux aléas de l'environnement réel.
+
+Au-delà de l'aspect technique, ce projet a été une expérience formatrice en gestion de projet. La coordination entre les pôles électronique et informatique, ainsi que l'utilisation d'outils collaboratifs comme Git, ont été enrichissantes.
+
+Le tableau ci-dessous détaille la répartition des tâches et les contributions de chaque membre de l'équipe ayant permis la réalisation de ce robot. Il est important de préciser que le nombre de commits de chacun n'est pas vraiment représentatif du travail fourni.
+
+\vspace{0.5cm}
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.4} % Aère les lignes (plus joli)
+    \setlength{\tabcolsep}{12pt}      % Espace horizontal dans les cellules
+    
+    \begin{tabular}{@{} l p{8.5cm} @{}} 
+    \toprule
+    \textbf{Membres} & \textbf{Rôles \& Contributions} \\ 
+    \midrule
+    
+    Assi Hadi & \multirow{2}{=}{Conception électronique, câblage, soudure, perçage du châssis, tests des composants et développement programmes composants} \\ 
+    Doubet Edouard & \\ 
+    \addlinespace[0.2cm] % Petit espace de séparation
+    
+    (El Marzouki Adam) & Gestion de projet, organisation, planning \\ 
+    \addlinespace[0.2cm]
+    
+    Eraud-Robert Bréhan & \multirow{2}{=}{Développement informatique (Algo), structures de données (TAD), analyse descendante et Direction Artistique} \\ 
+    Antunes Célia & \\ 
+    \addlinespace[0.2cm]
+    
+    Leprevost Romain & Développement informatique (robot), test des composants et ajustements \\ 
+    
+    \bottomrule
+    \end{tabular}
+    \caption{Répartition des tâches au sein de l'équipe}
+    \label{tab:repartition}
+\end{table}
+
+\section{Utilisation de l'IA / de LLM}
+Dans une démarche de transparence sur l'utilisation de ces outils, nous avons documenté dans un tableau individuel dans quel cadre ces derniers ont été utilisés.
+
+\vspace{0.5cm}
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.4} % Aère les lignes (plus joli)
+    \setlength{\tabcolsep}{12pt}      % Espace horizontal dans les cellules
+    
+    \begin{tabular}{@{} l p{12cm} @{}} 
+    \toprule
+    \textbf{Membres} & \textbf{Rôles \& Contributions} \\ 
+    \midrule
+    
+    Assi Hadi & Questions concernant le branchement du bus I²C, en particulier les adresses les plus courantes de l’écran LCD et du capteur RGB, le fonctionnement du capteur RGB, ainsi que la définition de plages de valeurs RGB adaptées pour différencier les pastilles du plateau.  \\ 
+    Doubet Edouard & Questions concernant les branchements sur l'I2C et les adresses les plus courantes pour l'écran LCD et le capteur RGB, questions sur le fonctionnement du capteur RGB et idées sur des valeurs RGB pour différencier les pastilles du plateau  \\ 
+    (El Marzouki Adam) & N/A \\ 
+    Eraud-Robert Bréhan & Base du script bash, support à la génération des tests et de la documentation. Correction de bugs de conception sur le BFS, uniformisation des noms de variables, génération de labyrinthes de test.  \\ 
+    Antunes Célia & Renseignement pour les différents algorithmes qui existent pour le plus court chemin et le plus adapté. Correction de bugs et support à la génération des tests. Aide lors d'erreur de compilation inhabituelle \\ 
+    Leprevost Romain & Idées de disposition capteurs / correction de problèmes liés au robot, flowchart rapport, makefile. Tentative sur le code du robot mais très insatisfaisant, besoin de connaître le robot et ses spécificités \\ 
+    
+    \bottomrule
+    \end{tabular}
+    \caption{Documentation de l'utilisation de l'IA par membre}
+    \label{tab:ia}
+\end{table}

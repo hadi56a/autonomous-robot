@@ -1,0 +1,41 @@
+\chapter{Démonstration}
+
+\section{Procédure de lancement}
+\begin{enumerate}
+    \item Se connecter en SSH sur la Raspberry Pi ;
+    \item Cloner le dépôt Git ;
+    \item Build le projet (via \texttt{make}) ;
+    \item Positionner le robot sur la pastille rouge dans le bon sens ;
+    \item Exécuter le script \texttt{run.sh} qui exécutera les deux programmes (cf. explications précédentes).
+\end{enumerate}
+
+\section{Mesure du temps}
+
+\begin{verbatim}
+algo git:(Algo-elec) time ./bin/laby ville.txt
+AV
+TG
+AV
+[...]
+TD
+AV
+AV
+.
+./bin/laby ville.txt  0,06s user 0,00s system 98% cpu 0,060 total
+\end{verbatim}
+L'exécution de l'algorithme est très rapide : 60 millisecondes pour la ville du sujet.
+
+Pour la mesure du temps du robot, nous n'avons pas réussi à terminer le parcours le jour de la soutenance. Par conséquent, nous n'avons pas de métrique à ce sujet. Néanmoins, nous avons réussi à parcourir les 15 premières cases en 30 secondes.
+
+\section{Comportement observé}
+
+\subsection{Première tentative}
+Lors de la première, le robot a détecté la ligne entre deux plaques comme une intersection, il s'est alors mis à tourner au milieu d'une ligne droite.
+
+\subsection{Deuxième tentative}
+Lors de la deuxième tentative, le robot a parcouru sans faute les 15 premières tuiles. Il a sonné correctement au passage des pastilles, il a bien affiché toutes les instructions sur son écran. Néanmoins, à la sortie d'un virage qui était suivi d'une pastille, les capteurs n'ont pas lu la ligne noire qui était cachée par la pastille.
+
+\subsection{Troisième tentative}
+Lors de la troisième tentative, le robot s'est planté dès le premier virage pour la même raison, les capteurs avant ont besoin de passer sur la ligne noire pour arrêter la rotation mais la pastille verte cachait la ligne...
+
+% blabla

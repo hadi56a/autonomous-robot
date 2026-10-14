@@ -1,0 +1,30 @@
+\chapter{Présentation du sujet}
+
+\section{Description générale du problème}
+Dans cette partie, nous allons passer en revue les différentes contraintes imposées, et l'organisation générale de notre groupe dans le cadre du projet. Le but n'est pas d'aborder en détail ce que nous avons réalisé, mais plutôt de passer en revue le déroulement général du projet.
+
+
+\section{Format du fichier de description de la ville}
+L'entrée pour notre programme sera un fichier texte décomposé comme suit :
+\begin{itemize}
+    \item Première ligne : largeur $l$ (nombre de cases par côté).
+    \item Deuxième ligne : case de départ + orientation (par exemple \texttt{6S}).
+    \item Lignes suivantes : passages entre cases (\texttt{1-2}, \texttt{1-6}, etc.).
+    \item Dernières lignes : numéros des cases contenant les points de passage.
+    \item Fin du fichier : un point \texttt{.}.
+\end{itemize}
+
+\hspace{1cm}
+
+\noindent Ce fichier sera lu par notre programme pour comprendre la ville et les points de passage, une fois le programme terminé, il renverra une liste d'instructions pour le robot. Regardons donc un peu plus en détail quels sont les ordres que le robot peut recevoir.
+
+\section{Différents ordres pour le robot}
+\begin{itemize}
+    \item \texttt{AV} : avancer jusqu'au prochain croisement ;
+    \item \texttt{TG} : tourner à gauche (sans avancer) ;
+    \item \texttt{TD} : tourner à droite (sans avancer).
+\end{itemize}
+
+\hspace{1cm}
+
+\noindent Ces ordres seront lus par notre programme et exécutés par le robot pour réaliser le parcours complet. Le programme de création des instructions lit un fichier, spécifié en paramètre de la commande, afin d'obtenir les informations de la ville. Son exécution produit une sortie dans la sortie standard, que nous récupérons dans l'entrée standard du programme chargé de déplacer le robot. L'exécution des programmes ressemble donc à \texttt{./algo/bin/laby ville.txt | ./elec/bin/robot}.
