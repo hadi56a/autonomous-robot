@@ -1,0 +1,42 @@
+# Edition des liens
+*.o
+
+# Librairies dynamiques/statiques
+*.so
+*.a
+*.lib
+
+# Fichiers exécutables
+*.exe
+*.out
+
+# Debug (si besoin)
+*.dSYM/
+*.ipdb
+*.pdb
+
+# Logs
+*.log
+
+# dossier VS et clangd
+.vscode/
+.clangd
+
+# LATEX
+*.aux
+*.toc
+*.lof
+
+# Fichiers de configuration
+*.clangd
+
+# Fichiers de compilation LaTeX
+programmes/algo/bin/*
+programmes/algo/doc/*
+rapport/main.bcf
+rapport/main.fdb_latexmk
+rapport/main.fls
+rapport/main.pdf
+rapport/main.run.xml
+rapport/main.synctex.gz
+rapport/main.toc
