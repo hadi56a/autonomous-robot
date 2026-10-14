@@ -4,6 +4,10 @@ Robot autonome qui lit le plan d'une ville, calcule son itinéraire, puis le par
 
 Projet d'intégration réalisé en équipe de 6 à l'INSA Rouen Normandie (2025-2026), codé en **C** sur **Raspberry Pi 4**.
 
+![Simulation : le robot passe par les points de passage (en vert) puis revient à son point de départ](docs/images/simulation_parcours.gif)
+
+*Simulation de l'itinéraire calculé par le programme `algo` : le robot (triangle rouge) passe par tous les points de passage (en vert), puis revient à sa case de départ.*
+
 ---
 
 ## Fonctionnement
